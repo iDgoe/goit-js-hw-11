@@ -1,5 +1,6 @@
 import Notiflix from 'notiflix';
-import SimpleLightbox from 'simplelightbox';
+import SimpleLightbox from "simplelightbox";
+import "simplelightbox/dist/simple-lightbox.min.css";
 import { UnsplashApi } from '../src/js/unsplash-api';
 
 const searchForm = document.querySelector('.search-form');
@@ -8,6 +9,7 @@ const galleryEl = document.querySelector('.gallery')
 console.log(galleryEl);
 
 let query = '';
+let lightbox = null;
 // let page = 1;
 // const perPage = 40;
 
@@ -48,32 +50,32 @@ const markup = data.map(el => {
 .join('');
 
 galleryEl.insertAdjacentHTML('beforeend', markup);
+
+lightbox = new SimpleLightbox('.gallery a', {
+  captionsData: 'alt',
+  captionPosition: 'buttom',
+  captionDelay: 250,
+});
+console.dir(lightbox);
+// lightbox.refresh();
 }
 
-const onSearchFormSubmit = event => {
+const onSearchFormSubmit = async event => {
   event.preventDefault();
+
   const { target: formEl } = event;
 
   unsplashApi.query = formEl.elements.searchQuery.value;
-    
-    // console.log(unsplashApi.page)
   
     query = unsplashApi.query;
-   
-
-    unsplashApi
-    .fetchPhotosByQuery(query)
-    .then(data => {
-        console.log(data.hits)
-        console.log(unsplashApi.page)
-        unsplashApi.page += 1;
-        console.log(unsplashApi.page)
-        renderGallery(data.hits)
-    })
-    .catch(err => {
-        console.log(err);
-    })
-};
+    try {
+    const result = await unsplashApi.fetchPhotosByQuery(query);
+    console.log((result.data.hits))
+    renderGallery(result.data.hits)
+    } catch (err) {
+      console.log(err);
+    }
+    }
 
 function resetEl(el) {
     el.innerHTML = '';
@@ -81,4 +83,33 @@ function resetEl(el) {
 
 searchForm.addEventListener('submit', onSearchFormSubmit);
 
+// var lightbox = new SimpleLightbox('.gallery a', {
+//   captionsData: 'alt',
+//   captionPosition: 'buttom',
+//   captionDelay: 250,
+// });
 
+// console.dir(lightbox);
+
+
+const loadMoreBtnEl = document.querySelector('.js-load-more');
+
+const onLoadMoreBtnClick = async event => {
+  unsplashApi.page += 1;
+
+  try {
+    const response = await unsplashApi.fetchPhotosByQuery();
+
+    const { data } = response;
+
+    galleryEl.insertAdjacentHTML('beforeend', createGalleryCards(data.results));
+    lightbox.refresh();
+    if (unsplashApi.page === data.total_pages) {
+      loadMoreBtnEl.classList.add('is-hidden');
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+loadMoreBtnEl.addEventListener('click', onLoadMoreBtnClick);

@@ -23,15 +23,6 @@ export class UnsplashApi {
 
     return axios.get(
       `${UnsplashApi.BASE_URL}/api/?${searchParams}`
-      
     )
-      .then(response => {
-        
-        console.log(response.data);
-        return response.data;
-      })
-      .catch(err => {
-        console.log(err)
-      })
   }
 }
