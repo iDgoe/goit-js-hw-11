@@ -3,12 +3,14 @@ import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
 import { UnsplashApi } from '../src/js/unsplash-api';
 
+// ❗️❗️❗️ НОМЕР СТОРІНКИ ВИВОДИТЬ У КОНСОЛІ ;)
+
 const searchForm = document.querySelector('.search-form');
-console.log(searchForm);
+// console.log(searchForm);
 const galleryEl = document.querySelector('.gallery')
-console.log(galleryEl);
+// console.log(galleryEl);
 const loadMoreBtnEl = document.querySelector('.js-load-more');
-console.log(galleryEl);
+// console.log(galleryEl);
 
 let query = '';
 let lightbox = null;
@@ -16,7 +18,7 @@ let lightbox = null;
 // const perPage = 40;
 
 const unsplashApi = new UnsplashApi();
-console.log(unsplashApi);
+// console.log(unsplashApi);
 
 
 function renderGallery(data) {
@@ -70,6 +72,7 @@ const onSearchFormSubmit = async event => {
   query = unsplashApi.query;
 
   if (query.trim() == '') {
+    loadMoreBtnEl.classList.add('is-hidden');
     Notiflix.Notify.failure(
       'Please specify your search query.',
     );
@@ -78,9 +81,10 @@ const onSearchFormSubmit = async event => {
 
     try {
     const result = await unsplashApi.fetchPhotosByQuery(query);
-    console.log(result.data);
+    // console.log(result.data);
     unsplashApi.page = 1;
-    console.log(result.data.total);
+     console.log('page='+unsplashApi.page);
+    // console.log(result.data.total);
     if (result.data.total === 0) {
       loadMoreBtnEl.classList.add('is-hidden');
       Notiflix.Notify.failure(
@@ -110,7 +114,7 @@ searchForm.addEventListener('submit', onSearchFormSubmit);
 
 const onLoadMoreBtnClick = async event => {
   unsplashApi.page += 1;
-  console.log (unsplashApi.page);
+  console.log('page='+unsplashApi.page);
   
   try {
     const response = await unsplashApi.fetchPhotosByQuery(query);
