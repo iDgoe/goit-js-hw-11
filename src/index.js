@@ -83,26 +83,20 @@ function resetEl(el) {
 
 searchForm.addEventListener('submit', onSearchFormSubmit);
 
-// var lightbox = new SimpleLightbox('.gallery a', {
-//   captionsData: 'alt',
-//   captionPosition: 'buttom',
-//   captionDelay: 250,
-// });
-
-// console.dir(lightbox);
-
 
 const loadMoreBtnEl = document.querySelector('.js-load-more');
 
 const onLoadMoreBtnClick = async event => {
   unsplashApi.page += 1;
-
+  console.log (unsplashApi.page);
+  
   try {
-    const response = await unsplashApi.fetchPhotosByQuery();
-
+    const response = await unsplashApi.fetchPhotosByQuery(query);
+    console.log(response);
     const { data } = response;
+    console.log(data.hits);
+    galleryEl.insertAdjacentHTML('beforeend', renderGallery(data.hits));
 
-    galleryEl.insertAdjacentHTML('beforeend', createGalleryCards(data.results));
     lightbox.refresh();
     if (unsplashApi.page === data.total_pages) {
       loadMoreBtnEl.classList.add('is-hidden');
@@ -113,3 +107,4 @@ const onLoadMoreBtnClick = async event => {
 };
 
 loadMoreBtnEl.addEventListener('click', onLoadMoreBtnClick);
+
