@@ -37,16 +37,15 @@
 .search-form button {  
   display: flex;
   justify-content: center;
-  align-items: center;  
-  border: none;
+  // align-items: center;  
   background-color: aquamarine; 
   border-radius: 0 5px 5px 0;
-  padding: 8px 20px;  
+  padding: 10px 20px;  
   cursor: pointer;
 }
 
 .search-form button:hover {
-  background-color: rgba(224, 224, 224, 0.5);
+  background-color: rgba(7, 145, 83, 0.5);
   transition: all 0.3s;
 }
 
@@ -67,23 +66,8 @@
 }
 
 .gallery {
-  margin-left: -20px;
-  padding-top: 20px;
   justify-content: center;  
 }
-
-// .gallery {
-//   display: grid;
-//   max-width: 1140px;
-//   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-//   grid-auto-rows: 240px;
-//   grid-gap: 12px;
-//   justify-content: center;
-//   padding: 0;
-//   list-style: none;
-//   margin-left: auto;
-//   margin-right: auto;
-// }
 
 .gallery__link {
   margin-top: 20px;
@@ -94,6 +78,7 @@
   border-radius: 10px;
   overflow: hidden;
   transition: all 0.3s;
+  text-decoration: none;
 }
 
 .gallery__link:hover,
@@ -104,73 +89,31 @@
 .gallery-item {
   display: flex;
   flex-direction: column;
-  // justify-content: space-evenly;  
+
 }
 
 .gallery-item__img {
   display: block;
   height: 30vh;
-  // object-fit: cover;  
+
 }
 
 .info {
   padding: 10px;
   justify-content: space-around;
+  text-decoration: none
 }
 
 .info-item {
   display: flex;
+    justify-content: space-around;
   flex-direction: column;
   align-items: center;
   color: rgb(113, 113, 113);
   gap: 5px;
+  text-decoration: none
 
 }
-
-
-
-
-// ============================
-
-// .gallery {
-  // display: grid;
-  // max-width: 1140px;
-  // grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  // grid-auto-rows: 240px;
-  // grid-gap: 12px;
-  // justify-content: center;
-  // padding: 0;
-  // list-style: none;
-  // margin-left: auto;
-  // margin-right: auto;
-// }
-
-// .gallery__item {
-//   position: relative;
-//   box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2),
-//     0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
-// }
-
-// .gallery-item__img:hover {
-//   transform: scale(1.03);
-// }
-
-// .gallery-item__img {
-//   height: 100%;
-//   width: 100%;
-//   object-fit: cover;
-//   transition: transform var(--animation-duration) var(--timing-function);
-// }
-
-// .gallery__link {
-//   display: block;
-//   text-decoration: none;
-//   height: 100%;
-// }
-
-// .gallery__link:hover {
-//   cursor: zoom-in;
-// }
 
 .load-more {
   font-size: 14px;
@@ -182,6 +125,7 @@
   cursor: pointer;
   margin-left: 10px;
   transition: background-color 250ms linear;
+  margin-bottom: 20px;
 }
 
 .load-more {
