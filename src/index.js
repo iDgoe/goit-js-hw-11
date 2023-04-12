@@ -15,7 +15,7 @@ const loadMoreBtnEl = document.querySelector('.js-load-more');
 let query = '';
 let lightbox = null;
 // let page = 1;
-// const perPage = 40;
+const perPage = 40;
 
 const unsplashApi = new UnsplashApi();
 // console.log(unsplashApi);
@@ -122,7 +122,13 @@ const onLoadMoreBtnClick = async event => {
     const { data } = response;
     renderGallery(data.hits);
     lightbox.refresh();
-    if (unsplashApi.page === data.total_pages) {
+
+
+    console.log(unsplashApi.page, data.total_pages);
+
+    const totalPage = Math.ceil(data.totalHits / perPage);
+
+    if (unsplashApi.page == totalPage) {
       loadMoreBtnEl.classList.add('is-hidden');
       Notiflix.Notify.failure(
         "We're sorry, but you've reached the end of search results.",

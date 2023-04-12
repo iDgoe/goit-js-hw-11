@@ -59,15 +59,6 @@
   padding-bottom: 20px;
 }
 
-.gallery,
-.info {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.gallery {
-  justify-content: center;  
-}
 
 .gallery__link {
   margin-top: 20px;
@@ -84,6 +75,16 @@
 .gallery__link:hover,
 .gallery__link:focus {
   transform: scale(1.05);
+}
+
+.gallery,
+.info {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.gallery {
+  justify-content: center;  
 }
 
 .gallery-item {
