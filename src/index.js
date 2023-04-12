@@ -23,9 +23,11 @@ const unsplashApi = new UnsplashApi();
 
 function renderGallery(data) {
     if (!galleryEl) {
+      loadMoreBtnEl.classList.add('is-hidden');
       return;
     }
     // resetEl(galleryEl);
+
 const markup = data.map(el => {
   const {
     id,
@@ -72,7 +74,6 @@ const onSearchFormSubmit = async event => {
   query = unsplashApi.query;
 
   if (query.trim() == '') {
-    loadMoreBtnEl.classList.add('is-hidden');
     Notiflix.Notify.failure(
       'Please specify your search query.',
     );
@@ -91,13 +92,22 @@ const onSearchFormSubmit = async event => {
         'Search result is zero. Change your query',
       );
       galleryEl.innerHTML = '';
-      loadMoreBtnEl.classList.add('is-hidden');
       return;
     }
     else {
       renderGallery(result.data.hits);
       Notiflix.Notify.success(`We found ${result.data.totalHits} images.`);
       loadMoreBtnEl.classList.remove('is-hidden');
+
+      const totalPage = Math.ceil(result.data.totalHits / perPage);
+
+      console.log(unsplashApi.page, totalPage);
+      if (unsplashApi.page == totalPage) {
+        loadMoreBtnEl.classList.add('is-hidden');
+        Notiflix.Notify.info(
+          "We're sorry, but you've reached the end of search results.",
+        );
+      }
     }
     } catch (err) {
       Notiflix.Notify.failure('Something went wrong. Please try again later.');
@@ -130,7 +140,7 @@ const onLoadMoreBtnClick = async event => {
 
     if (unsplashApi.page == totalPage) {
       loadMoreBtnEl.classList.add('is-hidden');
-      Notiflix.Notify.failure(
+      Notiflix.Notify.info(
         "We're sorry, but you've reached the end of search results.",
       );
     }
